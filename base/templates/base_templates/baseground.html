@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>baseground</title>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        img {
+            width: 10%;
+            height: 15%;
+            position: absolute;
+            /* top: 65px;
+            left: -15px; */
+        }
+
+        .flipped {
+            transform: scale(-1, 1);
+            -moz-transform: scale(-1, 1);
+            -webkit-transform: scale(-1, 1);
+            -o-transform: scale(-1, 1);
+            -khtml-transform: scale(-1, 1);
+            -ms-transform: scale(-1, 1);
+        }
+    </style>
+</head>
+
+<body style="height: 100%; width: 100%; background-image:url('../../static/images/game_bg.jpg');">
+
+    <img id="img_char1" src="{% static 'images/char2-remove.png' %}" alt="">
+
+</body>
+
+<script>
+    temp1 = 0
+    temp2 = 0
+    width_val = 1350
+    height_val = 550
+
+    var audio = new Audio('../../static/audio/alert.mp3')
+
+    console.log(screen.width, screen.height)
+    $(document).ready(function () {
+        $(document).keydown(function (e) {
+            if (e.which == '38' && temp1 > 0) { //up arrow key
+                temp1 -= 30
+                $("#img_char1").finish().animate({
+                    top: "-=30"
+                });
+                if (temp1 == 0) {
+                    audio.play()
+                }
+            }
+            else if (e.which == '40' && temp1 < height_val) { //down arrow key
+                temp1 += 30
+                $("#img_char1").finish().animate({
+                    top: "+=30"
+                });
+                if (height_val < temp1) {
+                    audio.play()
+                }
+            }
+
+            else if (e.which == '37' && temp2 > 0) { //left arrow key
+                temp2 -= 30
+                $("#img_char1").addClass('flipped')
+                $("#img_char1").finish().animate({ //rotate(45)
+                    left: "-=30"
+                });
+                if (temp2 == 0) {
+                    audio.play()
+                }
+            }
+
+            else if (e.which == '39' && temp2 < width_val) { //Right arrow key
+                temp2 += 30
+                $("#img_char1").removeClass('flipped')
+                $("#img_char1").finish().animate({
+                    left: "+=30"
+
+                });
+                if (width_val == temp2) {
+                    audio.play()
+                }
+            }
+        });
+    })    
+</script>
+
+</html>
