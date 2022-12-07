@@ -12,8 +12,8 @@
 
     <style>
         img {
-            width: 10%;
-            height: 15%;
+            width: 8%;
+            height: 14%;
             position: absolute;
             /* top: 65px;
             left: -15px; */
@@ -27,6 +27,24 @@
             -khtml-transform: scale(-1, 1);
             -ms-transform: scale(-1, 1);
         }
+
+        .blink {
+            animation: blink .6s linear infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: .1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
@@ -39,52 +57,61 @@
 <script>
     temp1 = 0
     temp2 = 0
-    width_val = 1350
+    width_val = 1380
     height_val = 550
 
     var audio = new Audio('../../static/audio/alert.mp3')
+
 
     console.log(screen.width, screen.height)
     $(document).ready(function () {
         $(document).keydown(function (e) {
             if (e.which == '38' && temp1 > 0) { //up arrow key
                 temp1 -= 30
+                $("#img_char1").removeClass('blink') //remove border animation
                 $("#img_char1").finish().animate({
                     top: "-=30"
                 });
                 if (temp1 == 0) {
+                    $("#img_char1").addClass('blink') //border animation class
                     audio.play()
+
                 }
             }
             else if (e.which == '40' && temp1 < height_val) { //down arrow key
                 temp1 += 30
+                $("#img_char1").removeClass('blink') //remove border animation
                 $("#img_char1").finish().animate({
                     top: "+=30"
                 });
                 if (height_val < temp1) {
+                    $("#img_char1").addClass('blink') //border animation class
                     audio.play()
                 }
             }
 
             else if (e.which == '37' && temp2 > 0) { //left arrow key
                 temp2 -= 30
-                $("#img_char1").addClass('flipped')
+                $("#img_char1").addClass('flipped') // flip character
+                $("#img_char1").removeClass('blink') //remove border animation
                 $("#img_char1").finish().animate({ //rotate(45)
                     left: "-=30"
                 });
                 if (temp2 == 0) {
+                    $("#img_char1").addClass('blink') //border animation class
                     audio.play()
                 }
             }
 
             else if (e.which == '39' && temp2 < width_val) { //Right arrow key
                 temp2 += 30
-                $("#img_char1").removeClass('flipped')
+                $("#img_char1").removeClass('flipped') // flip character
+                $("#img_char1").removeClass('blink') //remove border animation
                 $("#img_char1").finish().animate({
                     left: "+=30"
-
                 });
                 if (width_val == temp2) {
+                    $("#img_char1").addClass('blink') //border animation class
                     audio.play()
                 }
             }
